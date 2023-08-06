@@ -13,35 +13,53 @@ onUiLoaded(function() {
 
 function openPopup(extension,base64Data) {
 	let url = ""
-	if(extension == null){url = pictors_url}
+	if(extension === null){url = pictors_url}
 	else{url = pictors_url + "#image/" + extension + ";base64," + base64Data}
 	window.open(url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
 }
 
 function onClick() {
-	let selectedIndex = selected_gallery_index();
+	let selectedIndex = selected_gallery_index()
+	let selectedButton = null
+	let imgElement =null
+
+	//詳細表示ではなく、一覧表示の場合
 	if (selectedIndex == -1) {
-		openPopup(null,null);
-		return
+		try{
+			imgElement = document.getElementById("txt2img_gallery").querySelector('img')
+		}catch{
+			try{
+				imgElement = document.getElementById("img2img_gallery").querySelector('img')
+			}catch{
+				openPopup(null,null);
+				return
+			}
+		}
+	}else{
+		selectedButton = all_gallery_buttons()[selectedIndex];
+		if(selectedButton == null){return}
+		imgElement = selectedButton.querySelector('img')
 	}
-	const selectedButton = all_gallery_buttons()[selectedIndex];
-	if(selectedButton == null){return}
-	const imgElement = selectedButton.querySelector('img')
 	const imgSrc = imgElement.getAttribute('src');
 	const extension = imgSrc.split('/').pop().split('.').pop();
 
 	fetch(imgSrc)
-		.then(response => response.blob())
-		  	.then(blob => {
-				const reader = new FileReader();
-				reader.onload = () => {
-					const base64Data = reader.result.split(',')[1];
-			  		openPopup(extension,base64Data)
-				};
-				reader.readAsDataURL(blob);
-			})
-		.catch(error => {
-			console.error('画像の取得に失敗しました', error);
-		});
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.blob();
+    })
+    .then(blob => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const base64Data = reader.result.split(',')[1];
+            openPopup(extension, base64Data);
+        };
+        reader.readAsDataURL(blob);
+    })
+    .catch(error => {
+        console.error('画像の取得に失敗しました', error);
+    });
 }
 
