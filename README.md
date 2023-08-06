@@ -8,9 +8,9 @@ Extension for Stable Diffusion WebUI that adds a button for easy upload to Aipic
 Please note that this is an Aipictors informal project and is part of my hobby.
 
 # インストール / Installation
-Extensions→Install from URLを開き、"URL for extension's git repository"に"https://github.com/Stella2211/sd-webui-aipictors-uploader"と入力してInstallボタンをクリック。
+Extensions→Install from URLを開き、"URL for extension's git repository"に https://github.com/Stella2211/sd-webui-aipictors-uploader と入力してInstallボタンをクリック。
 
-Open Extensions→Install from URL, enter "https://github.com/Stella2211/sd-webui-aipictors-uploader" in the "URL for extension's git repository" and click the Install button.
+Open Extensions→Install from URL, enter https://github.com/Stella2211/sd-webui-aipictors-uploader in the "URL for extension's git repository" and click the Install button.
 
 # 使い方/ Usage
 txt2imgとimg2imgタブに追加される、"Upload to Aipictors"というボタンを押すと、AIピクターズの投稿画面が、画像が設定された状態でポップアップします。
