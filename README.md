@@ -24,5 +24,5 @@ If the image generated on the WebUI side is displayed in detail, it is set; if i
 
 You can then post the image by setting the title and other information as you normally would.
 
-![This Button](https://github.com/Stella2211/sd-webui-aipictors-uploader/imgs/This_Button.webp)
-![PopUp](https://github.com/Stella2211/sd-webui-aipictors-uploader/imgs/PopUp.webp)
+![This Button](./imgs/This_Button.webp)
+![PopUp](./imgs/PopUp.webp)
