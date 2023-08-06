@@ -1,5 +1,5 @@
 //アップロードボタンが押された際の動作
-const pictors_url = "https://www.aipictors.com/post/#image/"
+const pictors_url = "https://www.aipictors.com/post/"
 
 const window_width = 400;
 const window_height = 600;
@@ -12,13 +12,18 @@ onUiLoaded(function() {
 })
 
 function openPopup(extension,base64Data) {
-	const url = pictors_url + extension + ";base64," + base64Data
+	let url = ""
+	if(extension == null){url = pictors_url}
+	else{url = pictors_url + "#image/" + extension + ";base64," + base64Data}
 	window.open(url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
 }
 
 function onClick() {
 	let selectedIndex = selected_gallery_index();
-	if (selectedIndex == -1) {selectedIndex = 0;}
+	if (selectedIndex == -1) {
+		openPopup(null,null);
+		return
+	}
 	const selectedButton = all_gallery_buttons()[selectedIndex];
 	if(selectedButton == null){return}
 	const imgElement = selectedButton.querySelector('img')

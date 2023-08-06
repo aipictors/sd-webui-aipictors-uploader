@@ -13,9 +13,8 @@ Extensions→Install from URLを開き、"URL for extension's git repository"に
 Open Extensions→Install from URL, enter https://github.com/Stella2211/sd-webui-aipictors-uploader in the "URL for extension's git repository" and click the Install button.
 
 # 使い方/ Usage
-txt2imgとimg2imgタブに追加される、"Upload to Aipictors"というボタンを押すと、AIピクターズの投稿画面が、画像が設定された状態でポップアップします。
-
-WebUI側で生成された画像を詳細表示している場合はそれが設定され、一覧表示している場合は先頭のものが設定されます。
+txt2imgとimg2imgタブに追加される、"Upload to Aipictors"というボタンを押すと、AIピクターズの投稿画面がポップアップ表示されます。
+WebUI側で生成された画像を詳細表示している場合は、それが自動で設定されます。
 
 あとは普段と同様に、タイトル等の情報を設定すれば投稿できます。
 
