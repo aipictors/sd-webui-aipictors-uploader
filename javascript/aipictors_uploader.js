@@ -15,7 +15,8 @@ function openPopup(extension,base64Data) {
 	else{url = pictors_url + "#image/" + extension + ";base64," + base64Data}
 	//window.open(url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`)
 	//ポップアップブロック回避のため、別タブで開く
-	window.open(url)
+	//window.open(url)
+	window.open(url, '_blank');
 }
 
 function noImgAlert(){
