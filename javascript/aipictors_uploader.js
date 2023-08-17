@@ -7,16 +7,48 @@ const window_height = 600
 const window_pos_x = screen.width - window_width
 const window_pos_y = 0
 
+const post_image_url = "https://www.aipictors.com/wp-content/themes/AISite/post-img-cache.php"
+
 onUiLoaded(function() {gradioApp().querySelectorAll("#upload_to_aipictors_button").forEach(btn => btn.addEventListener("click", onClick))})
 
 function openPopup(extension,base64Data) {
 	let url = ""
-	if(extension === null){url = pictors_url}
-	else{url = pictors_url + "#image/" + extension + ";base64," + base64Data}
-	//window.open(url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`)
-	//ポップアップブロック回避のため、別タブで開く
-	//window.open(url)
-	window.open(url, '_blank');
+	if(extension === null){
+        url = pictors_url;
+	window.open(url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
+        return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", post_image_url, true);
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                if (response.result === "success") {
+                    const nanoid = response.nanoid;
+                    const newTabUrl = pictors_url + "?cache=" + nanoid;
+                    window.open(newTabUrl, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
+                } else if (response.result === "oversize") {
+                    alert("画像サイズが大きいです。");
+                } else if (response.result === "noimage") {
+                    alert("空の画像が送信されました。");
+                } else {
+                    alert("エラーが発生しました。");
+                }
+            } else {
+                alert("リクエストが失敗しました。");
+            }
+        }
+    };
+
+    const formData = new FormData();
+    const blob = new Blob([base64Data], { type: "text/plain" });
+
+    formData.append("imageData", blob);
+
+    xhr.send(formData);
 }
 
 function noImgAlert(){
@@ -26,7 +58,7 @@ function onClick() {
 	const tab = gradioApp().getElementById('tabs').getElementsByClassName("selected")[0].textContent.toString()
 	let selectedIndex = selected_gallery_index()
 	let selectedButton = null
-	let imgElement =　null
+	let imgElement = null
 	let imgSrc = null
 
 	//一覧表示の場合
@@ -77,4 +109,3 @@ function onClick() {
         alert('画像の取得に失敗しました', error)
     })
 }
-
