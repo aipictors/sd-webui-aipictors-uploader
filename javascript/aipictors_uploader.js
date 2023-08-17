@@ -12,43 +12,41 @@ const post_image_url = "https://www.aipictors.com/wp-content/themes/AISite/post-
 onUiLoaded(function() {gradioApp().querySelectorAll("#upload_to_aipictors_button").forEach(btn => btn.addEventListener("click", onClick))})
 
 function openPopup(extension,base64Data) {
-	let url = ""
-	if(extension === null){
-        url = pictors_url;
-	window.open(url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
-        return;
-    }
+	if (extension === null){
+		window.open(pictors_url, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
+		return;
+	}
 
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", post_image_url, true);
+	const xhr = new XMLHttpRequest();
+	xhr.open("POST", post_image_url, true);
 
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                const response = JSON.parse(xhr.responseText);
-                if (response.result === "success") {
-                    const nanoid = response.nanoid;
-                    const newTabUrl = pictors_url + "?cache=" + nanoid;
-                    window.open(newTabUrl, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
-                } else if (response.result === "oversize") {
-                    alert("画像サイズが大きいです。");
-                } else if (response.result === "noimage") {
-                    alert("空の画像が送信されました。");
-                } else {
-                    alert("エラーが発生しました。");
-                }
-            } else {
-                alert("リクエストが失敗しました。");
-            }
-        }
-    };
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === XMLHttpRequest.DONE) {
+			if (xhr.status === 200) {
+				const response = JSON.parse(xhr.responseText);
+				if (response.result === "success") {
+					const nanoid = response.nanoid;
+					const newTabUrl = pictors_url + "?cache=" + nanoid;
+					window.open(newTabUrl, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
+				} else if (response.result === "oversize") {
+					alert("画像サイズが大きいです。");
+				} else if (response.result === "noimage") {
+					alert("空の画像が送信されました。");
+				} else {
+					alert("エラーが発生しました。");
+				}
+			} else {
+				alert("リクエストが失敗しました。");
+			}
+		}
+	};
 
-    const formData = new FormData();
-    const blob = new Blob([base64Data], { type: "text/plain" });
+	const formData = new FormData();
+	const blob = new Blob([base64Data], { type: "text/plain" });
 
-    formData.append("imageData", blob);
+	formData.append("imageData", blob);
 
-    xhr.send(formData);
+	xhr.send(formData);
 }
 
 function noImgAlert(){
@@ -106,6 +104,7 @@ function onClick() {
         reader.readAsDataURL(blob)
     })
     .catch(error => {
-        alert('画像の取得に失敗しました', error)
+	alert('画像の取得に失敗しました', error)
     })
 }
+
