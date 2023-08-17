@@ -98,8 +98,8 @@ function onClick() {
     .then(blob => {
         const reader = new FileReader()
         reader.onload = () => {
-            const base64Data = reader.result.split(',')[1]
-            openPopup(extension, base64Data)
+            const base64Data = reader.result;
+            openPopup(extension, base64Data);
         }
         reader.readAsDataURL(blob)
     })
