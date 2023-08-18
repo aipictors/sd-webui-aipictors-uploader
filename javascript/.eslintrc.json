@@ -1,0 +1,20 @@
+{
+    "env":{
+        "browser": true,
+        "es2023": true
+    },
+    "extends": ["eslint:recommended"],
+    "rules": {
+        "no-console": "warn",
+        "no-unused-vars": "warn",
+        "indent": ["error", 4],
+        "space-before-blocks": "off",
+        "block-spacing":"off",
+        "brace-style": "off",
+        "keyword-spacing":"off",
+        "linebreak-style":"off"
+    },
+    "parserOptions":{
+        "ecmaVersion": 2023
+    }
+}
