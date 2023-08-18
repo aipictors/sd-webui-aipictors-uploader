@@ -9,7 +9,60 @@ const window_pos_y = 0
 
 const post_image_url = "https://www.aipictors.com/wp-content/themes/AISite/post-img-cache.php"
 
-onUiLoaded(function() {gradioApp().querySelectorAll("#upload_to_aipictors_button").forEach(btn => btn.addEventListener("click", onClick))})
+const icon_width = "1.5em"
+let txt2img_upload_button = null
+let img2img_upload_button = null
+let txt2imgIconElement = null
+let img2imgIconElement = null
+
+const iconStyles = {
+	"min-width": icon_width,
+	"max-width": icon_width
+};
+
+onUiUpdate(function() {
+	getIcon()
+});
+
+function getIcon(){
+	if(txt2img_upload_button == null || img2img_upload_button == null){return}
+	const iconPath = opts["aipictors_icon_path"]
+	if(iconPath == null){return}
+	setIcon(iconPath)
+}
+
+function setIcon(iconPath) {
+	if(!iconPath.startsWith("http://") && !iconPath.startsWith("https://")){//URLではなく、ファイルパスの場合
+		iconPath = "file=" + iconPath
+	}
+	if(txt2imgIconElement == null){
+		txt2imgIconElement = create_img_element(txt2img_upload_button)
+		img2imgIconElement = create_img_element(img2img_upload_button)
+	}
+	txt2imgIconElement.src = iconPath;
+	img2imgIconElement.src = iconPath;
+}
+
+function create_img_element(button){
+	const iconElement = document.createElement("img");
+	Object.assign(iconElement.style, iconStyles);
+	button.appendChild(iconElement);
+	return iconElement;
+}
+
+onUiLoaded(function() {
+	//バージョン1.6.0からUIが変更されたため、以前のバージョンと処理を分ける
+	gradioApp().querySelectorAll("#upload_to_aipictors_button_before_151").forEach(btn => btn.addEventListener("click", onClick))
+
+	txt2img_upload_button = gradioApp().querySelector("#txt2img_upload_to_aipictors_button")
+	if(txt2img_upload_button != null){
+		txt2img_upload_button.addEventListener("click", onClick);
+	}
+	img2img_upload_button = gradioApp().querySelector("#img2img_upload_to_aipictors_button")
+	if(img2img_upload_button != null){
+		img2img_upload_button.addEventListener("click", onClick);
+	}
+});
 
 function openPopup(extension,base64Data) {
 	if (extension === null){
