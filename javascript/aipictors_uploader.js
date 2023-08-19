@@ -9,7 +9,7 @@ const window_pos_x = screen.width - window_width;
 const window_pos_y = 0;
 
 //アイコンの設定(1.6.0以降用)
-const icon_width = "1.5em";
+const icon_width = "1.4em";
 let txt2img_upload_button = null;
 let img2img_upload_button = null;
 let txt2imgIconElement = null;
@@ -20,9 +20,7 @@ const iconStyles = {
     "max-width": icon_width
 };
 
-onUiUpdate(function() {
-    getIcon();
-});
+onUiUpdate(function() {getIcon();});
 
 function getIcon() {
     if(txt2img_upload_button == null || img2img_upload_button == null) {return;}
@@ -44,7 +42,7 @@ function setIcon(iconPath) {
     img2imgIconElement.src = iconPath;
 }
 
-function create_img_element(button){
+function create_img_element(button) {
     const iconElement = document.createElement("img");
     Object.assign(iconElement.style, iconStyles);
     button.appendChild(iconElement);
@@ -75,7 +73,7 @@ function openPopup(base64Data) {
                 const response = JSON.parse(xhr.responseText);
                 if (response.result === "success") {
                     const nanoid = response.nanoid;
-                    const newTabUrl = post_page_url + "?cache=" + nanoid;
+                    const newTabUrl = `${post_page_url}?cache=${nanoid}`;
                     window.open(newTabUrl, "_blank", `width=${window_width},height=${window_height},left=${window_pos_x},top=${window_pos_y}`);
                 } else if (response.result === "oversize") {
                     alert("画像サイズが大きいです。");
@@ -92,15 +90,10 @@ function openPopup(base64Data) {
 
     const formData = new FormData();
     const blob = new Blob([base64Data], {type: "text/plain"});
-
     formData.append("imageData", blob);
-
     xhr.send(formData);
 }
 
-function noImgAlert(){
-    alert("アップロードできる画像がありません");
-}
 function onClick() {
     const tab = gradioApp().getElementById('tabs').getElementsByClassName("selected")[0].textContent.toString();
     let selectedIndex = selected_gallery_index();
@@ -112,9 +105,9 @@ function onClick() {
     if (selectedIndex == -1) {
         try{
             if(tab.includes("txt2img")){
-                imgElement = document.getElementById("txt2img_gallery").querySelector('img');
+                imgElement = gradioApp().getElementById("txt2img_gallery").querySelector('img');
             }else if(tab.includes("img2img")){
-                imgElement = document.getElementById("img2img_gallery").querySelector('img');
+                imgElement = gradioApp().getElementById("img2img_gallery").querySelector('img');
             }else{//起こるはずはないが、txt2imgタブかimg2imgタブ以外でボタンが押された場合
                 noImgAlert();
                 return;
@@ -155,3 +148,4 @@ function onClick() {
         });
 }
 
+function noImgAlert(){alert("アップロードできる画像がありません");}

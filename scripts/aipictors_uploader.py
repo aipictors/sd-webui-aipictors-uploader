@@ -12,6 +12,7 @@ class Script(scripts.Script):
         return scripts.AlwaysVisible
 
     def after_component(self, component, **kwargs):
+        print(component)
         #バージョン1.5.2からUIが変更されたため、以前のバージョンと処理を分ける
         if(kwargs.get("elem_id") == "extras_tab"):
             gr.Button(value="Upload to Aipictors", elem_id="upload_to_aipictors_button_before_151")
