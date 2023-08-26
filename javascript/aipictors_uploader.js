@@ -9,7 +9,7 @@ const window_pos_x = screen.width - window_width;
 const window_pos_y = 0;
 
 //アイコンの設定(1.6.0以降用)
-const icon_width = "1.4em";
+const icon_width = "1.35em";
 let txt2img_upload_button = null;
 let img2img_upload_button = null;
 let txt2imgIconElement = null;
