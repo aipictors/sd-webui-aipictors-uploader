@@ -24,8 +24,8 @@ class Script(scripts.Script):
 
 def on_ui_settings():
     section = ('aipictors_uploader', "Aipictors Uploader")
-    icon = os.path.join(os.path.dirname(__file__),f"imgs{os.sep}logo.svg")
-    shared.opts.add_option("aipictors_icon_path", shared.OptionInfo(icon, "Icon (1.6.0 or later only)", section=section))
+    icon = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__),'..')),f"imgs{os.sep}logo.svg")
+    shared.opts.add_option("aipictors_icon", shared.OptionInfo(icon, "Icon (1.6.0 or later only)", section=section))
 
 
 script_callbacks.on_ui_settings(on_ui_settings)
