@@ -24,7 +24,7 @@ onUiUpdate(function() {getIcon();});
 
 function getIcon() {
     if(txt2img_upload_button == null || img2img_upload_button == null) {return;}
-    const iconPath = opts["aipictors_icon_path"];
+    const iconPath = opts["aipictors_icon"];
     if(iconPath == null){return;}
     setIcon(iconPath);
 }
